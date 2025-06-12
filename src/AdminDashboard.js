@@ -8,19 +8,43 @@ export default function AdminDashboard({ user }) {
 
   useEffect(() => {
     const token = localStorage.getItem("token");
-    axios.get("/api/products").then((res) => {
-      // Ensure products is always an array
-      if (Array.isArray(res.data)) {
-        setProducts(res.data);
-      } else if (Array.isArray(res.data.products)) {
-        setProducts(res.data.products);
-      } else {
-        setProducts([]);
-      }
-    });
+    axios
+      .get("/api/products")
+      .then((res) => {
+        // Ensure products is always an array
+        if (Array.isArray(res.data)) {
+          setProducts(res.data);
+        } else if (Array.isArray(res.data.products)) {
+          setProducts(res.data.products);
+        } else {
+          setProducts([]);
+        }
+      })
+      .catch((err) => {
+        setMessage(
+          err.response?.data?.message ||
+            err.response?.data?.detail ||
+            "Failed to fetch products."
+        );
+      });
     axios
       .get("/api/orders", { headers: { Authorization: `Bearer ${token}` } })
-      .then((res) => setOrders(res.data));
+      .then((res) => {
+        if (Array.isArray(res.data)) {
+          setOrders(res.data);
+        } else if (Array.isArray(res.data.orders)) {
+          setOrders(res.data.orders);
+        } else {
+          setOrders([]);
+        }
+      })
+      .catch((err) => {
+        setMessage(
+          err.response?.data?.message ||
+            err.response?.data?.detail ||
+            "Failed to fetch orders."
+        );
+      });
   }, []);
 
   const handleDeleteProduct = async (productId) => {

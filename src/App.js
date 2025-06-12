@@ -17,7 +17,7 @@ function App() {
   const [user, setUser] = useState(null);
 
   useEffect(() => {
-    // On mount, check for token and user info in localStorage
+    
     const token = localStorage.getItem("token");
     const userInfo = localStorage.getItem("user");
     if (token && userInfo) setUser(JSON.parse(userInfo));

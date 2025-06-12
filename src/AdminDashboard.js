@@ -8,7 +8,16 @@ export default function AdminDashboard({ user }) {
 
   useEffect(() => {
     const token = localStorage.getItem("token");
-    axios.get("/api/products").then((res) => setProducts(res.data));
+    axios.get("/api/products").then((res) => {
+      // Ensure products is always an array
+      if (Array.isArray(res.data)) {
+        setProducts(res.data);
+      } else if (Array.isArray(res.data.products)) {
+        setProducts(res.data.products);
+      } else {
+        setProducts([]);
+      }
+    });
     axios
       .get("/api/orders", { headers: { Authorization: `Bearer ${token}` } })
       .then((res) => setOrders(res.data));
@@ -41,6 +50,11 @@ export default function AdminDashboard({ user }) {
   const handleCreateProduct = async (e) => {
     e.preventDefault();
     const token = localStorage.getItem("token");
+    // Validate required fields
+    if (!newProduct.name || !newProduct.price || !newProduct.stock) {
+      setMessage("Name, price, and stock are required.");
+      return;
+    }
     try {
       const res = await axios.post(
         "/api/products",
@@ -51,7 +65,9 @@ export default function AdminDashboard({ user }) {
         },
         { headers: { Authorization: `Bearer ${token}` } }
       );
-      setProducts([...products, res.data]);
+      // Accept both { product } and product object responses
+      const created = res.data.product || res.data;
+      setProducts([...products, created]);
       setMessage("Product created successfully.");
       setNewProduct({
         name: "",
@@ -83,6 +99,11 @@ export default function AdminDashboard({ user }) {
   const handleUpdateProduct = async (e) => {
     e.preventDefault();
     const token = localStorage.getItem("token");
+    // Validate required fields
+    if (!editProduct.name || !editProduct.price || !editProduct.stock) {
+      setMessage("Name, price, and stock are required.");
+      return;
+    }
     try {
       const res = await axios.put(
         `/api/products/${editingId}`,
@@ -93,7 +114,9 @@ export default function AdminDashboard({ user }) {
         },
         { headers: { Authorization: `Bearer ${token}` } }
       );
-      setProducts(products.map((p) => (p.id === editingId ? res.data : p)));
+      // Accept both { product } and product object responses
+      const updated = res.data.product || res.data;
+      setProducts(products.map((p) => (p.id === editingId ? updated : p)));
       setMessage("Product updated successfully.");
       setEditingId(null);
       setEditProduct({

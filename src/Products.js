@@ -10,7 +10,6 @@ export default function Products({ user }) {
   }, []);
 
   
-
   
   const orderProduct = async (product_id) => {
     try {

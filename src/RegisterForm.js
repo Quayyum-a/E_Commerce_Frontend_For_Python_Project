@@ -13,7 +13,7 @@ export default function RegisterForm() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      // If you want to register as admin, add role: 'admin' to the form object
+      
       const res = await axios.post("/api/auth/register", form);
       setMessage(res.data.message || "Registration successful!");
     } catch (err) {

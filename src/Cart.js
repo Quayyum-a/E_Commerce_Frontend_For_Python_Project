@@ -19,7 +19,6 @@ export default function Cart({ user }) {
             const res = await axios.get(`/api/cart/${cartId}`);
             cartData = res.data.cart;
           } catch (err) {
-            // If not found, create new cart
             cartData = null;
           }
         }

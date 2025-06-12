@@ -6,7 +6,7 @@ export default function Cart({ user }) {
   const [message, setMessage] = useState("");
   const [loading, setLoading] = useState(true);
 
-  // Create or fetch cart on mount
+  
   useEffect(() => {
     if (!user) return;
     // Try to fetch cart by user_id (assume 1 cart per user)

@@ -4,20 +4,16 @@ import { Link } from "react-router-dom";
 export default function Navbar({ user, onLogout }) {
   return (
     <nav className="navbar">
-      <div className="navbar-brand">E-Commerce</div>
+      <div className="navbar-brand">
+        <Link to="/">E-Commerce</Link>
+      </div>
       <ul className="navbar-links">
         {user ? (
           <>
             {user.role === "admin" ? (
               <>
                 <li>
-                  <Link to="/admin">Admin Dashboard</Link>
-                </li>
-                <li>
-                  <Link to="/products">Products</Link>
-                </li>
-                <li>
-                  <Link to="/orders">Orders</Link>
+                  <Link to="/admin">Dashboard</Link>
                 </li>
               </>
             ) : (

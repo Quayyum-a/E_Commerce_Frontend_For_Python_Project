@@ -10,6 +10,7 @@ import RegisterForm from "./RegisterForm";
 import Products from "./Products";
 import Orders from "./Orders";
 import AdminDashboard from "./AdminDashboard";
+import Cart from "./Cart";
 import "./App.css";
 
 function App() {
@@ -71,6 +72,10 @@ function App() {
                 <Navigate to="/login" />
               )
             }
+          />
+          <Route
+            path="/cart"
+            element={user ? <Cart user={user} /> : <Navigate to="/login" />}
           />
         </Routes>
       </>

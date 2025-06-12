@@ -9,8 +9,6 @@ export default function Products({ user }) {
     axios.get("/api/products").then((res) => setProducts(res.data));
   }, []);
 
-  
-  
   const orderProduct = async (product_id) => {
     try {
       const token = localStorage.getItem("token");
@@ -21,7 +19,7 @@ export default function Products({ user }) {
       );
       setMessage("Order placed!");
     } catch (err) {
-      setMessage("Order failed.");
+      setMessage(err.response?.data?.message || "Order failed.");
     }
   };
 
@@ -29,6 +27,7 @@ export default function Products({ user }) {
     <div className="products-page">
       <h2>Products</h2>
       <div className="products-list">
+        {products.length === 0 && <p>No products available.</p>}
         {products.map((p) => (
           <div className="product-card" key={p.id}>
             <img src={p.image_url} alt={p.name} />
@@ -41,7 +40,7 @@ export default function Products({ user }) {
           </div>
         ))}
       </div>
-      <div>{message}</div>
+      {message && <div className="message">{message}</div>}
     </div>
   );
 }

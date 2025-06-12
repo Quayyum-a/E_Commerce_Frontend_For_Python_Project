@@ -5,7 +5,7 @@ export default function RegisterForm() {
     username: "",
     email: "",
     password: "",
-    role: "customer", 
+    // role: "customer", // Only include if you want to allow admin registration
   });
   const [message, setMessage] = useState("");
   const handleChange = (e) =>
@@ -13,6 +13,7 @@ export default function RegisterForm() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
+      // If you want to register as admin, add role: 'admin' to the form object
       const res = await axios.post("/api/auth/register", form);
       setMessage(res.data.message || "Registration successful!");
     } catch (err) {
@@ -45,7 +46,7 @@ export default function RegisterForm() {
           onChange={handleChange}
           required
         />{" "}
-        {/* Hide role input from user, default to customer */}
+        {/* If you want to register as admin, add a role input here. Otherwise, all users will be customers. */}
         <button type="submit">Register</button>{" "}
       </form>{" "}
       <div className="message">{message}</div>{" "}

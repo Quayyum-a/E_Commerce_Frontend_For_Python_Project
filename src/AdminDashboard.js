@@ -14,7 +14,7 @@ export default function AdminDashboard({ user }) {
       .then((res) => setOrders(res.data));
   }, []);
 
-
+  // Admin: delete product
   const handleDeleteProduct = async (productId) => {
     const token = localStorage.getItem("token");
     try {
@@ -24,9 +24,7 @@ export default function AdminDashboard({ user }) {
       setProducts(products.filter((p) => p.id !== productId));
       setMessage("Product deleted successfully.");
     } catch (err) {
-      setMessage(
-        err.response?.data?.message || "Failed to delete product."
-      );
+      setMessage(err.response?.data?.message || "Failed to delete product.");
     }
   };
 
@@ -35,6 +33,7 @@ export default function AdminDashboard({ user }) {
       <h2>Admin Dashboard</h2>
       <h3>Products</h3>
       <div className="products-list">
+        {products.length === 0 && <p>No products available.</p>}
         {products.map((p) => (
           <div className="product-card" key={p.id}>
             <img src={p.image_url} alt={p.name} />
@@ -47,12 +46,13 @@ export default function AdminDashboard({ user }) {
       </div>
       <h3>Orders</h3>
       <div className="orders-list">
+        {orders.length === 0 && <p>No orders found.</p>}
         {orders.map((o) => (
           <div className="order-card" key={o.id}>
             <p>Order ID: {o.id}</p>
-            <p>Product: {o.product_name}</p>
+            <p>Product: {o.product_name || o.productId || "N/A"}</p>
             <p>Quantity: {o.quantity}</p>
-            <p>Status: {o.status}</p>
+            <p>Status: {o.status || "N/A"}</p>
           </div>
         ))}
       </div>

@@ -12,10 +12,27 @@ export default function LoginForm({ onLogin }) {
     e.preventDefault();
     try {
       const res = await axios.post("/api/auth/login", form);
-      // Expecting: { token, user: { ... } }
-      if (res.data.token && res.data.user) {
+      console.log("Login response:", res.data); // Log backend response
+      // Accept both { token, user } and { token } responses
+      // Flask returns { access_token, ... }
+      if (res.data.access_token) {
+        // Try to extract user info from JWT payload (sub field)
+        let userObj;
+        try {
+          const payload = JSON.parse(atob(res.data.access_token.split(".")[1]));
+          userObj = payload.sub || { email: form.email };
+        } catch (e) {
+          userObj = { email: form.email };
+        }
         setMessage("Login successful!");
-        if (onLogin) onLogin(res.data.user, res.data.token);
+        if (onLogin) onLogin(userObj, res.data.access_token);
+      } else if (res.data.token) {
+        let userObj = res.data.user;
+        if (!userObj) {
+          userObj = { email: form.email };
+        }
+        setMessage("Login successful!");
+        if (onLogin) onLogin(userObj, res.data.token);
       } else {
         setMessage("Login failed: Invalid response.");
       }

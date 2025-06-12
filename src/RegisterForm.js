@@ -5,7 +5,7 @@ export default function RegisterForm() {
     username: "",
     email: "",
     password: "",
-    role: "",
+    role: "customer", // default to customer
   });
   const [message, setMessage] = useState("");
   const handleChange = (e) =>
@@ -45,12 +45,7 @@ export default function RegisterForm() {
           onChange={handleChange}
           required
         />{" "}
-        <input
-          name="role"
-          placeholder="Role"
-          onChange={handleChange}
-          required
-        />{" "}
+        {/* Hide role input from user, default to customer */}
         <button type="submit">Register</button>{" "}
       </form>{" "}
       <div className="message">{message}</div>{" "}

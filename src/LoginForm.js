@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
 
-export default function LoginForm() {
+export default function LoginForm({ onLogin }) {
   const [form, setForm] = useState({ email: "", password: "" });
   const [message, setMessage] = useState("");
 
@@ -12,7 +12,13 @@ export default function LoginForm() {
     e.preventDefault();
     try {
       const res = await axios.post("/api/auth/login", form);
-      setMessage(res.data.message || "Login successful!");
+      // Expecting: { token, user: { ... } }
+      if (res.data.token && res.data.user) {
+        setMessage("Login successful!");
+        if (onLogin) onLogin(res.data.user, res.data.token);
+      } else {
+        setMessage("Login failed: Invalid response.");
+      }
     } catch (err) {
       setMessage(err.response?.data?.message || "Login failed.");
     }

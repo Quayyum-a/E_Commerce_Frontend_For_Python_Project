@@ -14,7 +14,7 @@ export default function AdminDashboard({ user }) {
       .then((res) => setOrders(res.data));
   }, []);
 
-  // Admin: add/edit/delete product (UI not shown here for brevity)
+
 
   return (
     <div className="admin-dashboard">

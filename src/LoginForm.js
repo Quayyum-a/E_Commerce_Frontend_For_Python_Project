@@ -13,8 +13,7 @@ export default function LoginForm({ onLogin }) {
     try {
       const res = await axios.post("/api/auth/login", form);
       console.log("Login response:", res.data); // Log backend response
-      // Accept both { token, user } and { token } responses
-      // Flask returns { access_token, ... }
+      
       if (res.data.access_token) {
         
         let userObj;

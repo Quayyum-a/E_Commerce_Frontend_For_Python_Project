@@ -24,6 +24,11 @@ export default function Navbar({ user, onLogout }) {
                 <li>
                   <Link to="/orders">My Orders</Link>
                 </li>
+                {user.role === "customer" && (
+                  <li>
+                    <Link to="/cart">Cart</Link>
+                  </li>
+                )}
               </>
             )}
             <li>

@@ -60,6 +60,10 @@ function App() {
             element={user ? <Products user={user} /> : <Navigate to="/login" />}
           />
           <Route
+            path="/cart"
+            element={user ? <Cart user={user} /> : <Navigate to="/login" />}
+          />
+          <Route
             path="/orders"
             element={user ? <Orders user={user} /> : <Navigate to="/login" />}
           />
@@ -72,10 +76,6 @@ function App() {
                 <Navigate to="/login" />
               )
             }
-          />
-          <Route
-            path="/cart"
-            element={user ? <Cart user={user} /> : <Navigate to="/login" />}
           />
         </Routes>
       </>

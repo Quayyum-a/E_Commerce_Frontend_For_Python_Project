@@ -42,7 +42,10 @@ export default function Cart({ user }) {
   const addToCart = async (product_id, quantity = 1) => {
     if (!cart) return;
     try {
-      const res = await axios.post(`/api/cart/${cart.id}/items`, { product_id, quantity });
+      const res = await axios.post(`/api/cart/${cart.id}/items`, {
+        product_id,
+        quantity,
+      });
       setCart(res.data.cart);
       setMessage("Added to cart!");
     } catch (err) {

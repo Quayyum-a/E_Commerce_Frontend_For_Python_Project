@@ -1,9 +1,5 @@
 import React, { useState, useEffect } from "react";
-import {
-  Routes,
-  Route,
-  Navigate,
-} from "react-router-dom";
+import { Routes, Route, Navigate } from "react-router-dom";
 import Navbar from "./Navbar";
 import LoginForm from "./LoginForm";
 import RegisterForm from "./RegisterForm";
@@ -17,7 +13,6 @@ function App() {
   const [user, setUser] = useState(null);
 
   useEffect(() => {
-    
     const token = localStorage.getItem("token");
     const userInfo = localStorage.getItem("user");
     if (token && userInfo) setUser(JSON.parse(userInfo));
@@ -36,49 +31,49 @@ function App() {
   };
 
   return (
-      <>
-        <Navbar user={user} onLogout={handleLogout} />
-        <Routes>
-          <Route
-            path="/"
-            element={
-              <Navigate
-                to={
-                  user
-                    ? user.role === "admin"
-                      ? "/admin"
-                      : "/products"
-                    : "/login"
-                }
-              />
-            }
-          />
-          <Route path="/login" element={<LoginForm onLogin={handleLogin} />} />
-          <Route path="/register" element={<RegisterForm />} />
-          <Route
-            path="/products"
-            element={user ? <Products user={user} /> : <Navigate to="/login" />}
-          />
-          <Route
-            path="/cart"
-            element={user ? <Cart user={user} /> : <Navigate to="/login" />}
-          />
-          <Route
-            path="/orders"
-            element={user ? <Orders user={user} /> : <Navigate to="/login" />}
-          />
-          <Route
-            path="/admin"
-            element={
-              user && user.role === "admin" ? (
-                <AdminDashboard user={user} />
-              ) : (
-                <Navigate to="/login" />
-              )
-            }
-          />
-        </Routes>
-      </>
+    <>
+      <Navbar user={user} onLogout={handleLogout} />
+      <Routes>
+        <Route
+          path="/"
+          element={
+            <Navigate
+              to={
+                user
+                  ? user.role === "admin"
+                    ? "/admin"
+                    : "/products"
+                  : "/login"
+              }
+            />
+          }
+        />
+        <Route path="/login" element={<LoginForm onLogin={handleLogin} />} />
+        <Route path="/register" element={<RegisterForm />} />
+        <Route
+          path="/products"
+          element={user ? <Products user={user} /> : <Navigate to="/login" />}
+        />
+        <Route
+          path="/cart"
+          element={user ? <Cart user={user} /> : <Navigate to="/login" />}
+        />
+        <Route
+          path="/orders"
+          element={user ? <Orders user={user} /> : <Navigate to="/login" />}
+        />
+        <Route
+          path="/admin"
+          element={
+            user && user.role === "admin" ? (
+              <AdminDashboard user={user} />
+            ) : (
+              <Navigate to="/login" />
+            )
+          }
+        />
+      </Routes>
+    </>
   );
 }
 

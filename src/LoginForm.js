@@ -16,7 +16,7 @@ export default function LoginForm({ onLogin }) {
       // Accept both { token, user } and { token } responses
       // Flask returns { access_token, ... }
       if (res.data.access_token) {
-        // Try to extract user info from JWT payload (sub field)
+        
         let userObj;
         try {
           const payload = JSON.parse(atob(res.data.access_token.split(".")[1]));

@@ -12,7 +12,6 @@ export default function Cart({ user }) {
     
     const fetchOrCreateCart = async () => {
       try {
-        // Try to get cart by user_id (you may need a /api/cart/user/<user_id> endpoint, else create)
         let cartId = localStorage.getItem("cart_id");
         let cartData = null;
         if (cartId) {

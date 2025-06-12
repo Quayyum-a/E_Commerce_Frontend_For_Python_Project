@@ -14,7 +14,21 @@ export default function AdminDashboard({ user }) {
       .then((res) => setOrders(res.data));
   }, []);
 
-
+  // Admin: delete product
+  const handleDeleteProduct = async (productId) => {
+    const token = localStorage.getItem("token");
+    try {
+      await axios.delete(`/api/products/${productId}`, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      setProducts(products.filter((p) => p.id !== productId));
+      setMessage("Product deleted successfully.");
+    } catch (err) {
+      setMessage(
+        err.response?.data?.message || "Failed to delete product."
+      );
+    }
+  };
 
   return (
     <div className="admin-dashboard">
@@ -27,7 +41,7 @@ export default function AdminDashboard({ user }) {
             <h3>{p.name}</h3>
             <p>${p.price}</p>
             <p>{p.description}</p>
-            {/* Add edit/delete buttons here */}
+            <button onClick={() => handleDeleteProduct(p.id)}>Delete</button>
           </div>
         ))}
       </div>
@@ -39,11 +53,10 @@ export default function AdminDashboard({ user }) {
             <p>Product: {o.product_name}</p>
             <p>Quantity: {o.quantity}</p>
             <p>Status: {o.status}</p>
-            {/* Add order management here */}
           </div>
         ))}
       </div>
-      <div>{message}</div>
+      {message && <div className="message">{message}</div>}
     </div>
   );
 }

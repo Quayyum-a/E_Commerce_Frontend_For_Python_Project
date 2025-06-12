@@ -9,7 +9,7 @@ export default function Cart({ user }) {
   
   useEffect(() => {
     if (!user) return;
-    // Try to fetch cart by user_id (assume 1 cart per user)
+    
     const fetchOrCreateCart = async () => {
       try {
         // Try to get cart by user_id (you may need a /api/cart/user/<user_id> endpoint, else create)

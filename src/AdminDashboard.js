@@ -14,7 +14,7 @@ export default function AdminDashboard({ user }) {
       .then((res) => setOrders(res.data));
   }, []);
 
-  // Admin: delete product
+
   const handleDeleteProduct = async (productId) => {
     const token = localStorage.getItem("token");
     try {

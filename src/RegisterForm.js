@@ -5,7 +5,7 @@ export default function RegisterForm() {
     username: "",
     email: "",
     password: "",
-    // role: "customer", // Only include if you want to allow admin registration
+    
   });
   const [message, setMessage] = useState("");
   const handleChange = (e) =>
@@ -46,7 +46,21 @@ export default function RegisterForm() {
           onChange={handleChange}
           required
         />{" "}
-        {/* If you want to register as admin, add a role input here. Otherwise, all users will be customers. */}
+        <input
+          name="confirmPassword"
+          type="password"
+          placeholder="Confirm Password"
+          onChange={handleChange}
+          required
+        />
+        {" "}
+        <input
+          name="role"
+          type="text"
+          placeholder="Role (optional, e.g., admin)"
+          onChange={handleChange}
+        />
+        {" "}
         <button type="submit">Register</button>{" "}
       </form>{" "}
       <div className="message">{message}</div>{" "}

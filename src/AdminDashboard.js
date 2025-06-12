@@ -23,7 +23,6 @@ export default function AdminDashboard({ user }) {
       .then((res) => setOrders(res.data));
   }, []);
 
-  
   const handleDeleteProduct = async (productId) => {
     const token = localStorage.getItem("token");
     try {
@@ -37,7 +36,6 @@ export default function AdminDashboard({ user }) {
     }
   };
 
-  
   const [newProduct, setNewProduct] = useState({
     name: "",
     price: "",
@@ -55,13 +53,17 @@ export default function AdminDashboard({ user }) {
       setMessage("Name, price, and stock are required.");
       return;
     }
+    // Remove empty optional fields
+    const submitProduct = { ...newProduct };
+    if (!submitProduct.description) delete submitProduct.description;
+    if (!submitProduct.image_url) delete submitProduct.image_url;
     try {
       const res = await axios.post(
         "/api/products",
         {
-          ...newProduct,
-          price: parseFloat(newProduct.price),
-          stock: parseInt(newProduct.stock),
+          ...submitProduct,
+          price: parseFloat(submitProduct.price),
+          stock: parseInt(submitProduct.stock),
         },
         { headers: { Authorization: `Bearer ${token}` } }
       );
@@ -77,11 +79,16 @@ export default function AdminDashboard({ user }) {
         image_url: "",
       });
     } catch (err) {
-      setMessage(err.response?.data?.message || "Failed to create product.");
+      if (err.response?.data?.message) {
+        setMessage(err.response.data.message);
+      } else if (err.response?.data?.detail) {
+        setMessage(err.response.data.detail);
+      } else {
+        setMessage("Failed to create product.");
+      }
     }
   };
 
- 
   const [editingId, setEditingId] = useState(null);
   const [editProduct, setEditProduct] = useState({
     name: "",
@@ -104,13 +111,17 @@ export default function AdminDashboard({ user }) {
       setMessage("Name, price, and stock are required.");
       return;
     }
+    // Remove empty optional fields
+    const submitEdit = { ...editProduct };
+    if (!submitEdit.description) delete submitEdit.description;
+    if (!submitEdit.image_url) delete submitEdit.image_url;
     try {
       const res = await axios.put(
         `/api/products/${editingId}`,
         {
-          ...editProduct,
-          price: parseFloat(editProduct.price),
-          stock: parseInt(editProduct.stock),
+          ...submitEdit,
+          price: parseFloat(submitEdit.price),
+          stock: parseInt(submitEdit.stock),
         },
         { headers: { Authorization: `Bearer ${token}` } }
       );
@@ -127,7 +138,13 @@ export default function AdminDashboard({ user }) {
         image_url: "",
       });
     } catch (err) {
-      setMessage(err.response?.data?.message || "Failed to update product.");
+      if (err.response?.data?.message) {
+        setMessage(err.response.data.message);
+      } else if (err.response?.data?.detail) {
+        setMessage(err.response.data.detail);
+      } else {
+        setMessage("Failed to update product.");
+      }
     }
   };
 

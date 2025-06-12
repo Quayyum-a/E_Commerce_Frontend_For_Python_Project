@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import {
-  BrowserRouter as Router,
+
   Routes,
   Route,
   Navigate,
@@ -36,45 +36,45 @@ function App() {
   };
 
   return (
-    <Router>
-      <Navbar user={user} onLogout={handleLogout} />
-      <Routes>
-        <Route
-          path="/"
-          element={
-            <Navigate
-              to={
-                user
-                  ? user.role === "admin"
-                    ? "/admin"
-                    : "/products"
-                  : "/login"
-              }
-            />
-          }
-        />
-        <Route path="/login" element={<LoginForm onLogin={handleLogin} />} />
-        <Route path="/register" element={<RegisterForm />} />
-        <Route
-          path="/products"
-          element={user ? <Products user={user} /> : <Navigate to="/login" />}
-        />
-        <Route
-          path="/orders"
-          element={user ? <Orders user={user} /> : <Navigate to="/login" />}
-        />
-        <Route
-          path="/admin"
-          element={
-            user && user.role === "admin" ? (
-              <AdminDashboard user={user} />
-            ) : (
-              <Navigate to="/login" />
-            )
-          }
-        />
-      </Routes>
-    </Router>
+      <>
+        <Navbar user={user} onLogout={handleLogout} />
+        <Routes>
+          <Route
+            path="/"
+            element={
+              <Navigate
+                to={
+                  user
+                    ? user.role === "admin"
+                      ? "/admin"
+                      : "/products"
+                    : "/login"
+                }
+              />
+            }
+          />
+          <Route path="/login" element={<LoginForm onLogin={handleLogin} />} />
+          <Route path="/register" element={<RegisterForm />} />
+          <Route
+            path="/products"
+            element={user ? <Products user={user} /> : <Navigate to="/login" />}
+          />
+          <Route
+            path="/orders"
+            element={user ? <Orders user={user} /> : <Navigate to="/login" />}
+          />
+          <Route
+            path="/admin"
+            element={
+              user && user.role === "admin" ? (
+                <AdminDashboard user={user} />
+              ) : (
+                <Navigate to="/login" />
+              )
+            }
+          />
+        </Routes>
+      </>
   );
 }
 

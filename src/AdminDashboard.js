@@ -65,7 +65,7 @@ export default function AdminDashboard({ user }) {
     }
   };
 
-  // Admin: edit product
+ 
   const [editingId, setEditingId] = useState(null);
   const [editProduct, setEditProduct] = useState({
     name: "",

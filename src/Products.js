@@ -6,7 +6,16 @@ export default function Products({ user }) {
   const [message, setMessage] = useState("");
 
   useEffect(() => {
-    axios.get("/api/products").then((res) => setProducts(res.data));
+    axios.get("/api/products").then((res) => {
+      // Ensure products is always an array
+      if (Array.isArray(res.data)) {
+        setProducts(res.data);
+      } else if (Array.isArray(res.data.products)) {
+        setProducts(res.data.products);
+      } else {
+        setProducts([]);
+      }
+    });
   }, []);
 
   const orderProduct = async (product_id) => {
@@ -27,18 +36,19 @@ export default function Products({ user }) {
     <div className="products-page">
       <h2>Products</h2>
       <div className="products-list">
-        {products.length === 0 && <p>No products available.</p>}
-        {products.map((p) => (
-          <div className="product-card" key={p.id}>
-            <img src={p.image_url} alt={p.name} />
-            <h3>{p.name}</h3>
-            <p>${p.price}</p>
-            <p>{p.description}</p>
-            {user && user.role === "customer" && (
-              <button onClick={() => orderProduct(p.id)}>Order</button>
-            )}
-          </div>
-        ))}
+        {(!products || products.length === 0) && <p>No products available.</p>}
+        {Array.isArray(products) &&
+          products.map((p) => (
+            <div className="product-card" key={p.id}>
+              <img src={p.image_url} alt={p.name} />
+              <h3>{p.name}</h3>
+              <p>${p.price}</p>
+              <p>{p.description}</p>
+              {user && user.role === "customer" && (
+                <button onClick={() => orderProduct(p.id)}>Order</button>
+              )}
+            </div>
+          ))}
       </div>
       {message && <div className="message">{message}</div>}
     </div>

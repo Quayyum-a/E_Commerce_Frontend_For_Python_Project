@@ -9,9 +9,9 @@ export default function Products({ user }) {
     axios.get("/api/products").then((res) => setProducts(res.data));
   }, []);
 
-  // Admin: add/edit/delete product (UI not shown here for brevity)
+  
 
-  // Customer: order product
+  
   const orderProduct = async (product_id) => {
     try {
       const token = localStorage.getItem("token");

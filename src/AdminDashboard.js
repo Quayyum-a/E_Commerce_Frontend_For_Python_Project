@@ -28,7 +28,7 @@ export default function AdminDashboard({ user }) {
     }
   };
 
-  // Admin: create product
+  
   const [newProduct, setNewProduct] = useState({
     name: "",
     price: "",

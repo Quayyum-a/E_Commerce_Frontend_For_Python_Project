@@ -5,7 +5,7 @@ export default function RegisterForm() {
     username: "",
     email: "",
     password: "",
-    role: "customer", // default to customer
+    role: "customer", 
   });
   const [message, setMessage] = useState("");
   const handleChange = (e) =>

@@ -21,7 +21,7 @@ export default function RegisterForm() {
       setMessage("Passwords do not match.");
       return;
     }
-    // Remove confirmPassword before sending to backend
+    
     const submitForm = { ...form };
     delete submitForm.confirmPassword;
     // If role is empty or only whitespace, don't send it

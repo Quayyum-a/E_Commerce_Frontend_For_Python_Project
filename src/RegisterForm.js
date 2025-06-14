@@ -24,7 +24,7 @@ export default function RegisterForm() {
     
     const submitForm = { ...form };
     delete submitForm.confirmPassword;
-    // If role is empty or only whitespace, don't send it
+  
     if (!submitForm.role || submitForm.role.trim() === "")
       delete submitForm.role;
     try {

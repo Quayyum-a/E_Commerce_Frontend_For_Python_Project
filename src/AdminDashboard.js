@@ -77,7 +77,7 @@ export default function AdminDashboard({ user }) {
       setMessage("Name, price, and stock are required.");
       return;
     }
-    // Remove empty optional fields
+    
     const submitProduct = { ...newProduct };
     if (!submitProduct.description) delete submitProduct.description;
     if (!submitProduct.image_url) delete submitProduct.image_url;

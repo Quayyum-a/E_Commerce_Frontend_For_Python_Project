@@ -91,7 +91,7 @@ export default function AdminDashboard({ user }) {
         },
         { headers: { Authorization: `Bearer ${token}` } }
       );
-      // Accept both { product } and product object responses
+      
       const created = res.data.product || res.data;
       setProducts([...products, created]);
       setMessage("Product created successfully.");

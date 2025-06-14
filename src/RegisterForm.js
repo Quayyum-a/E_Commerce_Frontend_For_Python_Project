@@ -31,7 +31,7 @@ export default function RegisterForm() {
       const res = await axios.post("/api/auth/register", submitForm);
       setMessage(res.data.message || "Registration successful!");
     } catch (err) {
-      // Show backend validation errors if present
+      
       if (err.response?.data?.message) {
         setMessage(err.response.data.message);
       } else if (err.response?.data?.detail) {

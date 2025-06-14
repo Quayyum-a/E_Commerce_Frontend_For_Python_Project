@@ -149,7 +149,7 @@ export default function AdminDashboard({ user }) {
         },
         { headers: { Authorization: `Bearer ${token}` } }
       );
-      // Accept both { product } and product object responses
+      
       const updated = res.data.product || res.data;
       setProducts(products.map((p) => (p.id === editingId ? updated : p)));
       setMessage("Product updated successfully.");

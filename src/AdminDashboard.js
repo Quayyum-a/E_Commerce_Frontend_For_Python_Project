@@ -11,7 +11,7 @@ export default function AdminDashboard({ user }) {
     axios
       .get("/api/products")
       .then((res) => {
-        // Ensure products is always an array
+        
         if (Array.isArray(res.data)) {
           setProducts(res.data);
         } else if (Array.isArray(res.data.products)) {

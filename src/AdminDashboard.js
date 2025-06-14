@@ -130,7 +130,7 @@ export default function AdminDashboard({ user }) {
   const handleUpdateProduct = async (e) => {
     e.preventDefault();
     const token = localStorage.getItem("token");
-    // Validate required fields
+    
     if (!editProduct.name || !editProduct.price || !editProduct.stock) {
       setMessage("Name, price, and stock are required.");
       return;
